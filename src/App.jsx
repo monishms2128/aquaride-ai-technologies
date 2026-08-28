@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import B2bSolutions from './components/B2bSolutions';
@@ -118,6 +119,9 @@ export default function App() {
         onClose={handleCloseDemoModal}
         prefilledTopic={modalTopic}
       />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
 
     </div>
   );
