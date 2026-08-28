@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { VEHICLE_PROFILES, WASH_MODES } from '../../data/mockData';
 import BikeCanvas from './BikeCanvas';
 import confetti from 'canvas-confetti';
@@ -238,7 +238,7 @@ Chemical Dispensed: ${activeModeConfig.chemicalDoseMl} ml
 Energy Used: ${activeModeConfig.powerKwh} kWh
 Cost per Wash: INR ${activeModeConfig.priceInr}
 Generated on: ${new Date().toLocaleString()}
-Team Crimson | Patent-Pending Cyber-Physical System`;
+AquaRide AI Technologies Pvt. Ltd. | Autonomous Cyber-Physical System`;
 
     const blob = new Blob([reportText], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);

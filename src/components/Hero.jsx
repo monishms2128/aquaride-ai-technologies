@@ -1,80 +1,126 @@
-﻿import React from 'react';
-import { Droplets, Sparkles, ShieldCheck, Zap, ArrowRight, Gauge, Layers, Cpu, Award } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { Droplets, Zap, ShieldCheck, ArrowRight, Play, Smartphone, Sparkles, MapPin } from "lucide-react";
+import { COMPANY_STATS } from "../data/mockData";
 
-export default function Hero({ onStartDemo, onOpenPitch }) {
-  const stats = [
-    { label: 'Water Consumed', val: '20-25 L', prev: '90 L Manual', highlight: '75% Saved', color: 'text-cyan-400' },
-    { label: 'Wash Duration', val: '2.5 Mins', prev: '35 Mins Manual', highlight: '10x Faster', color: 'text-sky-400' },
-    { label: 'Component Safety', val: 'AI Masked', prev: 'High Scratch Risk', highlight: 'Zero Damage', color: 'text-emerald-400' },
-    { label: 'MSME Breakeven', val: '16 Months', prev: '₹1.8L Capex', highlight: '50% Margin', color: 'text-amber-400' },
-  ];
+const BADGES = [
+  { icon: Droplets, label: "75% Groundwater Saved", color: "text-cyan-400", bg: "bg-cyan-500/10 border-cyan-500/30" },
+  { icon: Zap, label: "3-Min Precision Turnaround", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/30" },
+  { icon: ShieldCheck, label: "100% Electronics Safe (<35 Bar)", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/30" },
+];
+
+export default function Hero({ onOpenDemoModal, onScrollToSection }) {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
+
+  const scrollTo = (href) => {
+    if (onScrollToSection) {
+      onScrollToSection(href);
+    } else {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <section className="relative pt-6 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-cyan-600/20 via-blue-600/15 to-indigo-600/20 blur-[120px] rounded-full pointer-events-none -z-10" />
+    <section className="relative min-h-[92vh] flex flex-col items-center justify-center overflow-hidden pt-28 pb-16 px-4">
+      {/* Background with futuristic radial gradient */}
+      <div className="absolute inset-0 bg-slate-950" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.14),transparent)]" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-950/80 to-blue-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-bold shadow-lg shadow-cyan-500/10">
-          <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
-          <span>Patent-Pending Cyber-Physical Two-Wheeler Washing System</span>
-          <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-cyan-400" />
-          <span className="hidden sm:inline-block text-slate-300 font-mono">Form 2 IPO Ready</span>
+      {/* Grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{ 
+          backgroundImage: "linear-gradient(rgba(6,182,212,1) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,1) 1px, transparent 1px)", 
+          backgroundSize: "60px 60px" 
+        }}
+      />
+
+      <div className={`relative z-10 max-w-5xl mx-auto text-center space-y-8 transition-all duration-700 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+
+        {/* Live Launch Pill Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold font-mono uppercase tracking-wider">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+          <span>Commercial Station Network Live in Chennai & Kanchipuram</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-          Autonomous Bike Washing Powered by{' '}
-          <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent underline decoration-cyan-500/40 underline-offset-8">
-            Edge AI Vision
-          </span>
-        </h1>
+        {/* Headline */}
+        <div className="space-y-4">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.05]">
+            India's First Autonomous <br />
+            <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 bg-clip-text text-transparent">
+              AI Two-Wheeler Washing
+            </span> <br />
+            Station Network.
+          </h1>
+          
+          <p className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
+            Zero waiting lines. 3-minute precision washes. 75% groundwater reclaimed. Powered by Edge Computer Vision to protect motorcycle instrument clusters, ECUs, and paintwork.
+          </p>
+        </div>
 
-        <p className="text-sm sm:text-base lg:text-lg text-slate-300 font-medium max-w-3xl mx-auto leading-relaxed">
-          Replacing 90-liter water wastage, worker fatigue, and electrical damage with an enclosed, intelligent wash bay. 
-          Real-time dirt optical mapping, sensitive zone protection, and closed-loop multi-stage water reclamation.
-        </p>
+        {/* Value Badges */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          {BADGES.map(({ icon: Icon, label, color, bg }) => (
+            <div key={label} className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border ${bg} text-xs font-bold`}>
+              <Icon className={`w-4 h-4 ${color}`} />
+              <span className="text-slate-200">{label}</span>
+            </div>
+          ))}
+        </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
           <button
-            onClick={onStartDemo}
-            className="flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-slate-950 font-black text-sm hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-400/40 hover:scale-105 cursor-pointer"
+            onClick={() => scrollTo("#simulator-section")}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-sm transition-all duration-200 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 cursor-pointer"
           >
-            <Zap className="w-4 h-4 fill-current" />
-            <span>Launch Live AI Wash Simulator</span>
+            <span>Experience AI Simulator</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
-            onClick={onOpenPitch}
-            className="flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 text-slate-200 border border-slate-700/80 font-bold text-sm transition-all duration-200 hover:border-amber-500/50 hover:text-amber-300 shadow-lg cursor-pointer"
+            onClick={() => scrollTo("#rider-app")}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/40 text-cyan-300 font-bold text-sm transition-all duration-200 cursor-pointer"
           >
-            <Award className="w-4 h-4 text-amber-400" />
-            <span>Hackathon Pitch & Q&A Defense</span>
+            <Smartphone className="w-4 h-4 text-cyan-400" />
+            <span>Launch Rider Web App</span>
+          </button>
+
+          <button
+            onClick={() => onOpenDemoModal && onOpenDemoModal()}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-slate-900/50 hover:bg-slate-800 border border-slate-800 text-slate-300 font-medium text-sm transition-all duration-200 cursor-pointer"
+          >
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span>Partner / Franchise</span>
           </button>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 pt-6">
-          {stats.map((s, idx) => (
-            <div 
-              key={idx}
-              className="glass-panel p-4 rounded-2xl border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 text-left relative overflow-hidden group"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  {s.label}
-                </span>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
-                  {s.highlight}
-                </span>
+        {/* Verified Impact Strip */}
+        <div className="pt-6 border-t border-slate-900 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            {COMPANY_STATS.map((stat, idx) => (
+              <div key={idx} className="space-y-1">
+                <div className={`text-2xl sm:text-3xl font-black font-mono ${stat.color}`}>
+                  {stat.value}{stat.suffix}
+                </div>
+                <div className="text-xs font-bold text-slate-300">{stat.label}</div>
+                <div className="text-[10px] text-slate-500 line-clamp-1">{stat.desc}</div>
               </div>
-              <div className={`text-2xl font-black mt-2 ${s.color}`}>
-                {s.val}
-              </div>
-              <div className="text-[11px] text-slate-400 font-medium mt-0.5 line-through opacity-75">
-                {s.prev}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+      </div>
+
+      {/* Subtle Scroll Down Indicator */}
+      <div 
+        onClick={() => scrollTo("#solutions")} 
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-600 animate-bounce cursor-pointer"
+      >
+        <div className="w-px h-8 bg-gradient-to-b from-transparent to-cyan-500/50" />
+        <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/50" />
       </div>
     </section>
   );
