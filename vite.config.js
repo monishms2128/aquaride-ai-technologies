@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/aquaride-ai-technologies/',
+  base: process.env.VERCEL ? '/' : '/aquaride-ai-technologies/',
   plugins: [
     react(),
     tailwindcss()
