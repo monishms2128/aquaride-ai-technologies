@@ -1,8 +1,8 @@
-﻿name: Deploy AquaRide AI to GitHub Pages
+name: Deploy AquaRide AI to GitHub Pages
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "hackathon-edition" ]
   workflow_dispatch:
 
 permissions:
