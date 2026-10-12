@@ -8,7 +8,14 @@ import {
   Check, 
   RefreshCw, 
   Share2, 
-  MapPin
+  MapPin,
+  Download,
+  Star,
+  Sparkles,
+  Ticket,
+  Receipt,
+  QrCode,
+  Send
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundEffects } from '../utils/audioEffects';
@@ -89,25 +96,44 @@ export default function CustomerMobileApp() {
   const [currentStageIdx, setCurrentStageIdx] = useState(0);
   const [progressPercent, setProgressPercent] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(25);
-  const [showToast, setShowToast] = useState(null);
+  // Booking Token / Pass State
+  const [bookingToken, setBookingToken] = useState('AR-BAY1-0842');
+  const [bookingTime, setBookingTime] = useState('');
 
-  const currentPkg = PACKAGES.find(p => p.id === selectedPkgId) || PACKAGES[1];
-  const totalAmount = currentPkg.price + 
-    (hasChainLube ? 30 : 0) + 
-    (hasCeramicWax ? 40 : 0) + 
-    (hasHelmetClean ? 25 : 0);
+  // Review System State
+  const [rating, setRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewTag, setReviewTag] = useState('Spot-Free Shine');
+  const [reviewComment, setReviewComment] = useState('');
+  const [isSubmittedReview, setIsSubmittedReview] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    setBookingTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    setBookingToken(`AR-BAY1-${randomNum}`);
+  }, []);
 
   // Handle simulated payment
   const handleInitiatePayment = () => {
     setIsProcessingPayment(true);
     setTimeout(() => {
       setIsProcessingPayment(false);
-      setAppState('tracking');
-      setCurrentStageIdx(0);
-      setProgressPercent(0);
-      setSecondsLeft(25);
-      soundEffects.playSpraySound(60);
-    }, 1400);
+      setAppState('ticket');
+      soundEffects.success();
+      try {
+        confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
+      } catch (e) {}
+    }, 1000);
+  };
+
+  const handleStartWashFromTicket = () => {
+    setAppState('tracking');
+    setCurrentStageIdx(0);
+    setProgressPercent(0);
+    setSecondsLeft(25);
+    soundEffects.stageTransition();
+    soundEffects.playSpraySound(60);
   };
 
   // Live tracking timer & stage progression
@@ -149,6 +175,69 @@ export default function CustomerMobileApp() {
     setCurrentStageIdx(0);
     setProgressPercent(0);
     setSecondsLeft(25);
+    setIsSubmittedReview(false);
+    setReviewComment('');
+  };
+
+  const handleDownloadInvoice = () => {
+    soundEffects.beep(1200, 120);
+    const invoiceContent = [
+      '======================================================',
+      '           AQUARIDE AI TECHNOLOGIES',
+      '      Smart Autonomous Two-Wheeler Wash Bay',
+      '           Operated by Team AquaForge',
+      '======================================================',
+      'TAX INVOICE & ECO-SAVINGS CERTIFICATE',
+      `Invoice No:    ${bookingToken}`,
+      `Date & Time:   ${new Date().toLocaleDateString()} ${bookingTime || '10:30 AM'}`,
+      'Station:       Bay 01 - Kanchipuram Hub',
+      'GSTIN:         33AAICA9821M1Z5',
+      '------------------------------------------------------',
+      'CUSTOMER & VEHICLE DETAILS:',
+      `Vehicle:       ${selectedPreset.name}`,
+      `Registration:  ${selectedPreset.plate}`,
+      `Category:      ${selectedPreset.type}`,
+      '------------------------------------------------------',
+      'WASH PACKAGE & ADD-ONS:',
+      `1. ${currentPkg.name.padEnd(28)} Rs.${currentPkg.price.toFixed(2)}`,
+      hasChainLube ? '2. Chain Clean & Teflon Lube        Rs.30.00' : '',
+      hasCeramicWax ? '3. Hydrophobic Ceramic Gloss        Rs.40.00' : '',
+      hasHelmetClean ? '4. UV-C Helmet Sanitization         Rs.25.00' : '',
+      '------------------------------------------------------',
+      `Total Amount Paid (via UPI):       Rs.${totalAmount.toFixed(2)}`,
+      'Payment Status:                    CONFIRMED (SUCCESS)',
+      '------------------------------------------------------',
+      'ENVIRONMENTAL CONSERVATION IMPACT:',
+      `* Groundwater Saved vs Manual:     ${currentPkg.waterSaved} Liters`,
+      '* Water Quality Used:              0-TDS Pure Distilled',
+      '* Carbon Footprint Offset:         0.42 kg CO2 eq',
+      '* Effluent Recirculation Rate:     75% Closed-Loop',
+      '======================================================',
+      'Thank you for choosing zero-waste automated washing!',
+      'Website: https://monishms2128.github.io/aquaride-ai-technologies/',
+      '======================================================'
+    ].filter(Boolean).join('\n');
+
+    const blob = new Blob([invoiceContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `AquaRide_Invoice_${bookingToken}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    setShowToast('Official Invoice & Eco-Certificate downloaded!');
+    setTimeout(() => setShowToast(null), 3000);
+  };
+
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    setIsSubmittedReview(true);
+    soundEffects.success();
+    setShowToast('Thank you! Your verified review has been published.');
+    setTimeout(() => setShowToast(null), 3500);
   };
 
   const handleShareReceipt = () => {
@@ -522,6 +611,62 @@ export default function CustomerMobileApp() {
                   </div>
                 )}
 
+                {/* VIEW 2.5: DIGITAL BAY ENTRY TICKET PASS */}
+                {appState === 'ticket' && (
+                  <div className="space-y-4 animate-fade-in text-left">
+                    <div className="p-4 rounded-3xl bg-gradient-to-b from-cyan-950/90 via-slate-900 to-slate-950 border-2 border-cyan-400/60 shadow-xl space-y-3 relative overflow-hidden">
+                      <div className="flex items-center justify-between border-b border-cyan-500/30 pb-2">
+                        <div className="flex items-center gap-1.5">
+                          <Ticket className="w-4 h-4 text-cyan-400" />
+                          <span className="text-xs font-black text-white">BAY ENTRY PASS</span>
+                        </div>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">
+                          ACTIVE TICKET
+                        </span>
+                      </div>
+
+                      <div className="text-center py-2 bg-slate-950/80 rounded-2xl border border-slate-800 space-y-0.5">
+                        <div className="text-[10px] text-slate-400 uppercase font-mono">Token Pass ID</div>
+                        <div className="text-2xl font-black text-cyan-300 font-mono tracking-widest">{bookingToken}</div>
+                        <div className="text-[10px] text-emerald-400 font-mono">Slot: Today at {bookingTime} • Bay 01</div>
+                      </div>
+
+                      <div className="text-xs space-y-1 text-slate-300 font-mono bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Bike:</span>
+                          <span className="text-white font-bold">{selectedPreset.name}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Plate:</span>
+                          <span className="text-cyan-300">{selectedPreset.plate}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Package:</span>
+                          <span className="text-white font-bold">{currentPkg.name}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Paid:</span>
+                          <span className="text-emerald-400 font-bold">₹{totalAmount}</span>
+                        </div>
+                      </div>
+
+                      {/* Mock QR Code representation */}
+                      <div className="p-3 bg-white rounded-2xl text-center flex flex-col items-center justify-center shadow-md">
+                        <QrCode className="w-20 h-20 text-slate-950" />
+                        <span className="text-[9px] font-mono text-slate-700 font-bold mt-1">Scan at Bay Optical Sensor Gate</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleStartWashFromTicket}
+                      className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs transition-all shadow-lg shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2 hover:scale-[1.02]"
+                    >
+                      <Droplets className="w-4 h-4 fill-current" />
+                      <span>START AUTOMATED WASH CYCLE</span>
+                    </button>
+                  </div>
+                )}
+
                 {/* VIEW 3: LIVE WASH BAY TELEMETRY & CCTV TRACKING */}
                 {appState === 'tracking' && (
                   <div className="space-y-4 animate-fade-in text-center">
@@ -642,17 +787,106 @@ export default function CustomerMobileApp() {
                     {/* Tax invoice receipt summary */}
                     <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-[11px]">
                       <div className="flex justify-between text-slate-400 border-b border-slate-800 pb-1.5">
-                        <span>Invoice #AR-2026-9812</span>
+                        <span>Invoice #{bookingToken}</span>
                         <span className="text-emerald-400 font-bold">PAID VIA UPI</span>
                       </div>
                       <div className="flex justify-between text-slate-300">
-                        <span>{selectedPreset.name} ({selectedPreset.plate})</span>
+                        <span>{selectedPreset.name}</span>
                         <span className="font-mono font-bold">₹{totalAmount}</span>
                       </div>
                       <div className="text-[10px] text-slate-500 font-mono">
-                        GSTIN: 33AAICA9821M1Z5 • 100% Recycled Wash
+                        Reg: {selectedPreset.plate} • 0-TDS Pure Distilled Wash
                       </div>
                     </div>
+
+                    {/* Download Tax Invoice & Certificate Button */}
+                    <button
+                      onClick={handleDownloadInvoice}
+                      className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer transition-all"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>DOWNLOAD OFFICIAL TAX INVOICE (.TXT)</span>
+                    </button>
+
+                    {/* Customer Review System */}
+                    {!isSubmittedReview ? (
+                      <form onSubmit={handleSubmitReview} className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                            <span>Rate Your Wash Experience</span>
+                          </span>
+                          <span className="text-[10px] text-amber-400 font-bold font-mono">{rating} / 5 Stars</span>
+                        </div>
+
+                        {/* Star Rating Selectors */}
+                        <div className="flex items-center justify-center gap-2 py-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              type="button"
+                              key={star}
+                              onClick={() => setRating(star)}
+                              onMouseEnter={() => setHoverRating(star)}
+                              onMouseLeave={() => setHoverRating(0)}
+                              className="p-1 cursor-pointer transition-transform hover:scale-125"
+                            >
+                              <Star 
+                                className={`w-5 h-5 ${
+                                  (hoverRating || rating) >= star 
+                                    ? 'text-amber-400 fill-amber-400' 
+                                    : 'text-slate-700'
+                                }`} 
+                              />
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Review Quick Tags */}
+                        <div className="flex flex-wrap gap-1.5">
+                          {['Spot-Free Shine', 'Fast & Convenient', 'Safe on Screen', 'Great Value'].map((tag) => (
+                            <button
+                              type="button"
+                              key={tag}
+                              onClick={() => setReviewTag(tag)}
+                              className={`text-[9px] font-mono px-2 py-0.5 rounded-full border cursor-pointer transition-all ${
+                                reviewTag === tag 
+                                  ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300' 
+                                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                              }`}
+                            >
+                              {tag}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Comment Input */}
+                        <input
+                          type="text"
+                          placeholder="Add comments (e.g., zero scratches, clean rims)..."
+                          value={reviewComment}
+                          onChange={(e) => setReviewComment(e.target.value)}
+                          className="w-full p-2 rounded-xl bg-slate-900 border border-slate-800 text-[10px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                        />
+
+                        <button
+                          type="submit"
+                          className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                        >
+                          <Send className="w-3 h-3" />
+                          <span>Submit Verified Rider Review</span>
+                        </button>
+                      </form>
+                    ) : (
+                      <div className="p-3 rounded-xl bg-cyan-950/60 border border-cyan-400/40 text-center space-y-1">
+                        <div className="flex items-center justify-center gap-1 text-emerald-400 text-xs font-bold">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>Review Published Live!</span>
+                        </div>
+                        <p className="text-[10px] text-slate-300">
+                          Thank you for rating AquaRide AI. Your feedback helps our Kanchipuram station!
+                        </p>
+                      </div>
+                    )}
 
                     {/* Action buttons */}
                     <div className="grid grid-cols-2 gap-2">

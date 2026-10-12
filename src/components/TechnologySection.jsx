@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Cpu, ShieldCheck, Droplets, Gauge, Sparkles, Filter, CheckCircle2 } from "lucide-react";
 
 const FEATURES = [
@@ -124,6 +124,52 @@ export default function TechnologySection() {
                 <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-slate-300 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>3. 0-TDS Pure Condense</span>
+                </div>
+              </div>
+
+              {/* Animated Interactive Distillation Skid Simulation */}
+              <div className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800/90 space-y-3 pt-3">
+                <div className="flex items-center justify-between text-xs border-b border-slate-800/80 pb-2">
+                  <span className="font-mono text-cyan-400 font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    THERMODYNAMIC RECLAMATION CHAMBER (LIVE)
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400">Efficiency: 99.4%</span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2.5 text-center">
+                  {/* Step A: Boiler & Vapor */}
+                  <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 relative overflow-hidden">
+                    <div className="text-[10px] font-mono text-rose-400 font-bold mb-1">Thermal Evaporator</div>
+                    <div className="h-14 flex flex-col items-center justify-end relative">
+                      <div className="w-8 h-8 rounded-full bg-rose-500/10 border border-rose-500/40 animate-pulse flex items-center justify-center">
+                        <span className="text-xs">♨️</span>
+                      </div>
+                      <div className="text-[9px] text-slate-400 font-mono mt-1">Vapor Steam Rising</div>
+                    </div>
+                  </div>
+
+                  {/* Step B: Mineral Separation Chamber */}
+                  <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 relative overflow-hidden">
+                    <div className="text-[10px] font-mono text-amber-400 font-bold mb-1">Mineral Separator</div>
+                    <div className="h-14 flex flex-col items-center justify-center relative">
+                      <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/40 flex items-center justify-center">
+                        <span className="text-xs">⚗️</span>
+                      </div>
+                      <div className="text-[9px] text-amber-300/80 font-mono mt-1">Salts Stripped (-99%)</div>
+                    </div>
+                  </div>
+
+                  {/* Step C: Condenser & Spotless Distillate */}
+                  <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/40 relative overflow-hidden animate-coil">
+                    <div className="text-[10px] font-mono text-cyan-300 font-bold mb-1">Chilled Condenser</div>
+                    <div className="h-14 flex flex-col items-center justify-center relative">
+                      <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center">
+                        <Droplets className="w-4 h-4 text-cyan-400 animate-bounce" />
+                      </div>
+                      <div className="text-[9px] text-cyan-300 font-mono mt-1">&lt;5 PPM Distillate</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
