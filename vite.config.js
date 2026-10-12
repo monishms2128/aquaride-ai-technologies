@@ -2,11 +2,9 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// Base is '/' on Vercel or when GITHUB_PAGES is not set, otherwise '/aquaride-ai-technologies/'
-const isGitHubPages = process.env.GITHUB_PAGES === 'true';
-
+// Relative base path './' works everywhere: Vercel root (/), GitHub Pages (/aquaride-ai-technologies/), or local preview
 export default defineConfig({
-  base: isGitHubPages ? '/aquaride-ai-technologies/' : '/',
+  base: './',
   plugins: [
     react(),
     tailwindcss()
