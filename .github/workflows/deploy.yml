@@ -1,4 +1,4 @@
-name: Deploy Hackathon Edition to GitHub Pages
+﻿name: Deploy Hackathon Edition to GitHub Pages
 
 on:
   push:
@@ -18,10 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Hackathon Edition Branch
+      - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          ref: 'hackathon-edition'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,8 +30,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build Hackathon Edition
+      - name: Build with GitHub Pages Base Path
         run: npm run build
+        env:
+          GITHUB_PAGES: 'true'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
