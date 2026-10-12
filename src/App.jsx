@@ -1,5 +1,4 @@
 ﻿import React, { useState } from 'react';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import B2bSolutions from './components/B2bSolutions';
@@ -15,10 +14,9 @@ import TestimonialsSection from './components/TestimonialsSection';
 import Footer from './components/Footer';
 import ContactDemoModal from './components/ContactDemoModal';
 
-function AppContent() {
+export default function App() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [modalTopic, setModalTopic] = useState('');
-  const { isDark } = useTheme();
 
   const handleOpenDemoModal = (topic = '') => {
     setModalTopic(topic);
@@ -38,11 +36,9 @@ function AppContent() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col justify-between font-sans transition-colors duration-300 ${
-      isDark ? 'bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950' : 'bg-slate-50 text-slate-900 selection:bg-cyan-400 selection:text-slate-950'
-    }`}>
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between font-sans selection:bg-cyan-500 selection:text-slate-950">
       
-      {/* Global Sticky Navigation with Light/Dark Switcher */}
+      {/* Global Sticky Navigation */}
       <Navbar 
         onOpenDemoModal={() => handleOpenDemoModal('Free Station Demo Booking')}
         onScrollToSection={scrollToSection}
@@ -68,20 +64,16 @@ function AppContent() {
         <HowItWorks />
 
         {/* 5. Interactive Live AI Wash Bay Simulator */}
-        <section id="simulator-section" className={`py-20 px-4 relative border-t transition-colors duration-300 ${
-          isDark 
-            ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-slate-800/60' 
-            : 'bg-gradient-to-b from-white via-slate-50 to-white border-slate-200 shadow-inner'
-        }`}>
+        <section id="simulator-section" className="py-20 px-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative border-t border-slate-800/80">
           <div className="max-w-7xl mx-auto space-y-6">
             <div className="text-center space-y-3 max-w-3xl mx-auto">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-500 bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20">
-                Interactive Engineering Showcase
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20">
+                Team AquaForge • Cyber-Physical Engineering
               </span>
-              <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
                 Live AI Wash Bay <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Simulator</span>
               </h2>
-              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
                 Test our cyber-physical systems: vehicle model classification, optical dirt measurement, sensitive zone masking, and closed-loop distilled water final rinse.
               </p>
             </div>
@@ -128,13 +120,5 @@ function AppContent() {
       />
 
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
   );
 }

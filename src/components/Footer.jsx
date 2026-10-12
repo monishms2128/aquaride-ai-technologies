@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Droplets, Send, MapPin, Phone, Mail, CheckCircle2 } from 'lucide-react';
 
 export default function Footer({ onScrollToSection, onOpenDemoModal }) {
@@ -51,7 +51,7 @@ export default function Footer({ onScrollToSection, onOpenDemoModal }) {
             <div className="space-y-1.5 text-[11px] text-slate-400 pt-1">
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                <span>Chennai (HQ) • Kanchipuram • Bengaluru</span>
+                <span>Chennai (HQ) â€¢ Kanchipuram â€¢ Bengaluru</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -128,7 +128,7 @@ export default function Footer({ onScrollToSection, onOpenDemoModal }) {
               onClick={() => onOpenDemoModal && onOpenDemoModal()}
               className="w-full py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold text-xs transition-all cursor-pointer text-center"
             >
-              Book Station Consultation →
+              Book Station Consultation â†’
             </button>
           </div>
 
@@ -142,11 +142,11 @@ export default function Footer({ onScrollToSection, onOpenDemoModal }) {
           
           <div className="flex items-center gap-4 text-slate-400">
             <a href="#" className="hover:text-slate-300 transition-colors">Privacy Policy</a>
-            <span>•</span>
+            <span>â€¢</span>
             <a href="#" className="hover:text-slate-300 transition-colors">Terms of Service</a>
-            <span>•</span>
+            <span>â€¢</span>
             <a href="#" className="hover:text-slate-300 transition-colors">Safety Standards</a>
-            <span>•</span>
+            <span>â€¢</span>
             <a href="#" className="hover:text-slate-300 transition-colors">Locations</a>
           </div>
         </div>

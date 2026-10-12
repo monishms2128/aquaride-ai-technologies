@@ -1,7 +1,7 @@
 ﻿# AquaRide AI Technologies
 ### Autonomous Water-Efficient Two-Wheeler Cleaning System
 
-**Team Crimson** | Smart Mobility and Sustainability Hackathon 2026
+**Team AquaForge** | Smart Mobility and Sustainability Hackathon 2026
 
 ---
 
@@ -44,5 +44,5 @@ npm run dev
 - GitHub Actions CI/CD
 
 ## Team
-Team Crimson | Kanchipuram, Tamil Nadu, India
+Team AquaForge | Kanchipuram, Tamil Nadu, India
 Patent Specification: Form 2 Indian Patent Office / PCT International (Draft Ready)
