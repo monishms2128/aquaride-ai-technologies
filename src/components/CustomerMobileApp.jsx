@@ -99,6 +99,14 @@ export default function CustomerMobileApp() {
   // Booking Token / Pass State
   const [bookingToken, setBookingToken] = useState('AR-BAY1-0842');
   const [bookingTime, setBookingTime] = useState('');
+  const [showToast, setShowToast] = useState(null);
+
+  // Computed package and total price
+  const currentPkg = PACKAGES.find(p => p.id === selectedPkgId) || PACKAGES[1];
+  const totalAmount = currentPkg.price + 
+    (hasChainLube ? 30 : 0) + 
+    (hasCeramicWax ? 40 : 0) + 
+    (hasHelmetClean ? 25 : 0);
 
   // Review System State
   const [rating, setRating] = useState(5);
