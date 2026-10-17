@@ -1,4 +1,4 @@
-﻿// Web Audio API Synthesizer for AquaRide AI Simulation
+// Web Audio API Synthesizer for AquaRide AI Simulation
 // Generates realistic water spray, foam bubble, brush motor, and cyclone air sounds without external audio files!
 
 class SoundEngine {
@@ -180,6 +180,32 @@ class SoundEngine {
       osc.start(startTime);
       osc.stop(startTime + 0.6);
     });
+  }
+
+  success() {
+    this.playSuccessChime();
+  }
+
+  stageTransition() {
+    this.beep(880, 150);
+  }
+
+  beep(freq = 600, durationMs = 100) {
+    if (!this.isEnabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + (durationMs / 1000));
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + (durationMs / 1000));
+    } catch (e) {}
   }
 
   stopAll() {
