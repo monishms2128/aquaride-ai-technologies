@@ -2,9 +2,9 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// Relative base path './' works everywhere: Vercel root (/), GitHub Pages (/aquaride-ai-technologies/), or local preview
+// Clean root base path for Vercel production hosting
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
     react(),
     tailwindcss()
