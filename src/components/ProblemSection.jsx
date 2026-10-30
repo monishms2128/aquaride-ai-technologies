@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Clock, Droplets, AlertTriangle } from "lucide-react";
 
 const PROBLEMS = [
@@ -46,8 +46,8 @@ export default function ProblemSection() {
             <span className="text-red-400">Broken.</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            India has 260 million two-wheelers and zero automated cleaning infrastructure. 
-            The status quo wastes water, time, and damages vehicles.
+            India has over 260 million two-wheelers, yet vehicle cleaning remains dominated by wasteful manual hoses or first-gen mechanical booths lacking 0-TDS closed-loop recycling. 
+            Existing manual and semi-automatic methods waste water, take 30+ minutes, and risk damaging delicate EV electronics.
           </p>
         </div>
 

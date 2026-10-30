@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Droplets, Menu, X, Smartphone, Sparkles, ShieldCheck } from "lucide-react";
 
 const NAV_LINKS = [
@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: "AI Simulator", href: "#simulator-section" },
   { label: "Rider App", href: "#rider-app" },
   { label: "Technology", href: "#technology" },
+  { label: "Recycling Video", href: "#water-recycling-demo" },
   { label: "Franchise ROI", href: "#roi-section" },
   { label: "Live Fleet", href: "#iot-section" },
   { label: "Pricing", href: "#pricing" },

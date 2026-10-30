@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import B2bSolutions from './components/B2bSolutions';
@@ -7,6 +7,7 @@ import HowItWorks from './components/HowItWorks';
 import WashSimulator from './components/Simulator/WashSimulator';
 import CustomerMobileApp from './components/CustomerMobileApp';
 import TechnologySection from './components/TechnologySection';
+import WaterRecyclingVideoDemo from './components/WaterRecyclingVideoDemo';
 import WashPackages from './components/WashPackages';
 import RoiCalculator from './components/RoiCalculator';
 import IotDashboard from './components/IotDashboard';
@@ -87,6 +88,9 @@ export default function App() {
 
         {/* 7. Proprietary Technology & Distilled Water Architecture */}
         <TechnologySection />
+
+        {/* 8. Closed-Loop Water Recycling Video & Interactive Demonstration */}
+        <WaterRecyclingVideoDemo />
 
         {/* 8. Wash Packages & Pricing */}
         <WashPackages />
