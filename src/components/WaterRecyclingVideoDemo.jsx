@@ -198,16 +198,16 @@ export default function WaterRecyclingVideoDemo() {
               <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800/80 mb-2 text-xs font-mono">
                 <span className="text-cyan-400 font-bold flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                  AQUARIDE_DISTILLATION_SIMULATION.MP4
+                  AQUARIDE_WATER_RECYCLING_PRO.MP4
                 </span>
-                <span className="text-slate-400 text-[11px]">720p HD • 30 FPS • 18s Loop</span>
+                <span className="text-emerald-400 text-[11px] font-bold">1080p Full HD • 30 FPS • 48s Broadcast Demo</span>
               </div>
 
               {/* Video Element */}
               <div className="relative rounded-2xl overflow-hidden bg-black aspect-video border border-slate-800 flex items-center justify-center">
                 <video
                   ref={videoRef}
-                  src="./water_recycling_demonstration.mp4"
+                  src="./aquaride_water_recycling_pro.mp4"
                   className="w-full h-full object-contain"
                   loop
                   playsInline
@@ -225,7 +225,7 @@ export default function WaterRecyclingVideoDemo() {
                     className="px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-                    <span>{isPlaying ? "Pause Video" : "Play Demonstration"}</span>
+                    <span>{isPlaying ? "Pause Video" : "Play Demonstration (48s)"}</span>
                   </button>
 
                   <button
@@ -239,12 +239,12 @@ export default function WaterRecyclingVideoDemo() {
 
                 {/* Direct MP4 Download Button for Jury / Evaluators */}
                 <a
-                  href="./water_recycling_demonstration.mp4"
-                  download="AquaRide_Water_Recycling_Demonstration.mp4"
+                  href="./aquaride_water_recycling_pro.mp4"
+                  download="AquaRide_Water_Recycling_Demonstration_48s_1080p.mp4"
                   className="px-3.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download Video (MP4)</span>
+                  <span>Download Pro Video (48s • 1080p)</span>
                 </a>
               </div>
             </div>
